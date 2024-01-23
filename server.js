@@ -3,7 +3,7 @@ const fs = require('fs');
 const express = require('express');
 const path = require('path');
 const notesData = require('./db/db.json');
-const uuid = require('.helpers/uuid');
+const uuid = require('./helpers/uuid');
 const PORT = 3001;
 const app = express();
 
@@ -23,14 +23,46 @@ app.get('*', (req, res) =>
 );
 
 // GET request for ALL notes
-app.get('/api/notes', (req, res) => res.json(notesData));
+app.get('/api/notes', (req, res) => {
+    fs.readFile(path.join(__dirname, notesData), 'utf-8', (err, note) => {
+    if (err) {
+        console.error(err);
+        res.status(500).json('Failed to read notes from database.');  
+        }
+    const notes = JSON.parse(note);
+    res.json(notes);
+  });
+});
 
 
 // POST request to add a note
 app.post('/api/notes', (req, res) =>  {
-res.json(`${req.method} request received`)
+    fs.readFile(path.join(__dirname, notesData), 'utf-8', (err, note) => {
+    if (err) {
+        console.log(err);
+        return res.status(500).json({ error: 'Failed to read notes from database.'});
+    }
+        const notes = JSON.parse(note);
+        const newNoteId = uuid();
 
+        const newNote = {
+            id: newNoteId,
+            title: req.body.title,
+            content: req.body.content,
+        };
+        notes.push(newNote);
+
+        fs.writeFile(path.join(__dirname, notesData), JSON.stringify(notes), (err) => {
+            if (err) {
+                console.error(err);
+                res.status(500).json({error: 'Failed to read notes from database.'});
+            }
+
+            res.json(newNote);
+        })
+    });
 });
+
 // Bonus: DELETE request
 
 app.listen(PORT, () =>
