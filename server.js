@@ -5,8 +5,8 @@ const PORT = 3001;
 const app = express();
 
 // GET HTML request routes
-app.get('/notes', (req, res) => res.send('Develop/db/views/notes.html'));
-app.get('*', (req,res) => res.send('Develop/db/views/index.html'));
+app.get('/notes', (req, res) => res.send('/db/views/notes.html'));
+app.get('*', (req,res) => res.send('/db/views/index.html'));
 // POST request
 // Bonus: DELETE request
 
