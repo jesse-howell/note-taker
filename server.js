@@ -3,7 +3,7 @@ const fs = require('fs');
 const express = require('express');
 const path = require('path');
 const notesData = require('./db/db.json');
-const uuid = require('uuid');
+const uuid = require('.helpers/uuid');
 const PORT = 3001;
 const app = express();
 
@@ -27,16 +27,17 @@ app.get('/api/notes', (req, res) => res.json(notesData));
 
 
 // POST request to add a note
-// app.post('/api/notes', (req, res) => )
+app.post('/api/notes', (req, res) =>  {
+res.json(`${req.method} request received`)
 
-
+});
 // Bonus: DELETE request
 
 app.listen(PORT, () =>
     console.log(`Listening at http://localhost:${PORT}`)
     );
 
-    // the get /notes returns the notes.html successfully
-    // the get * returns index.html successfully
-    // i need /api/notes to read db.json and return all saved notes to the db.json as a json
-    // post should add the new to db.json then display the note on the notes.html page
+// post needs to receive a const newNote to save on the req.body
+// add new note to db.json
+// return new note to client
+// each note needs a uuid attached
