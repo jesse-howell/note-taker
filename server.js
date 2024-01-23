@@ -2,26 +2,34 @@
 const fs = require('fs');
 const express = require('express');
 const path = require('path');
-const dbData = require('./db/db.json');
+const notesData = require('./db/db.json');
+const uuid = require('uuid');
 const PORT = 3001;
 const app = express();
 
-// GET HTML request routes
-// receives notes request then returns the notes.html file to client
-app.get('/notes', (req, res) =>
-    res.sendFile(path.join(__dirname, '/views/notes.html'))
-);
-// receives wildcard request then returns the index.html file to client
+// parsing middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// GET route for notes page
+app.get('/notes', (req, res) => {
+    res.sendFile(path.join(__dirname, '/views/notes.html'));
+  });
+
+
+// GET route for homepage
 app.get('*', (req, res) => 
     res.sendFile(path.join(__dirname, '/views/index.html'))
 );
 
-// GET API request route
-app.get('/api/notes', (req, res) => res.json(dbData));
+// GET request for ALL notes
+app.get('/api/notes', (req, res) => res.json(notesData));
 
 
-// POST API request route
-// app.post('/api/notes', (req, res) => res.json(dbData));
+// POST request to add a note
+// app.post('/api/notes', (req, res) => )
+
+
 // Bonus: DELETE request
 
 app.listen(PORT, () =>
