@@ -3,7 +3,7 @@ const fs = require('fs');
 const express = require('express');
 const path = require('path');
 const notesData = require('./db/db.json');
-const uuid = require('./helpers/uuid');
+// const uuid = require('./helpers/uuid');
 const PORT = 3001;
 const app = express();
 
@@ -45,7 +45,7 @@ app.post('/api/notes', (req, res) =>  {
         return res.status(500).json({ error: 'Failed to read notes from database.'});
     }
         const notes = JSON.parse(note);
-        const newNoteId = uuid();
+        // const newNoteId = uuid();
 
         const newNote = {
             id: newNoteId,
