@@ -11,6 +11,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(express.static('public'));
+
 // GET route for notes page
 app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, '/views/notes.html'));
@@ -24,7 +26,7 @@ app.get('*', (req, res) =>
 
 // GET request for ALL notes
 app.get('/api/notes', (req, res) => {
-    fs.readFile(path.join(__dirname, notesData), 'utf-8', (err, note) => {
+    fs.readFile(path.join(__dirname, './db/db.json'), 'utf-8', (err, note) => {
     if (err) {
         console.error(err);
         res.status(500).json('Failed to read notes from database.');  
@@ -37,7 +39,7 @@ app.get('/api/notes', (req, res) => {
 
 // POST request to add a note
 app.post('/api/notes', (req, res) =>  {
-    fs.readFile(path.join(__dirname, notesData), 'utf-8', (err, note) => {
+    fs.readFile(path.join(__dirname, './db/db.json'), 'utf-8', (err, note) => {
     if (err) {
         console.log(err);
         return res.status(500).json({ error: 'Failed to read notes from database.'});
@@ -52,7 +54,7 @@ app.post('/api/notes', (req, res) =>  {
         };
         notes.push(newNote);
 
-        fs.writeFile(path.join(__dirname, notesData), JSON.stringify(notes), (err) => {
+        fs.writeFile(path.join(__dirname, './db/db.json'), JSON.stringify(notes), (err) => {
             if (err) {
                 console.error(err);
                 res.status(500).json({error: 'Failed to read notes from database.'});
