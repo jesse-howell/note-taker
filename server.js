@@ -4,7 +4,6 @@ const PORT = 3001;
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const noteData = require('./db/db.json');
-const app = express();
 
 // GET route to return index.html
 app.get('*', (req, res) =>
