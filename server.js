@@ -1,8 +1,10 @@
 const express = require('express');
 const PORT = 3001;
 const path = require('path');
-const index = require('./routes/api/index.js');
+const api = require('./routes/api/index.js');
 const app = express();
+
+app.use('api', api);
 // GET route to return index.html
 app.get('*', (req, res) =>
   res.sendFile(path.join(__dirname, '/views/index.html'))
@@ -14,12 +16,6 @@ app.get('/notes', (req, res) =>
 );
 
 // DELETE route to delete a note by id
-
-// const uuid = () => {
-//   return Math.floor((1 + Math.random()) * 0x10000)
-//     .toString(16)
-//     .substring(1);
-// };
 
 app.listen(PORT, () =>
   console.log(`Express server listening at http://localhost:${PORT}`)
