@@ -1,6 +1,6 @@
-const index = require('express').Router();
-const notesRouter = require('./notes');
+const app = require('express').Router();
+const notesData = require('./notes');
 
-index.use('/routes/api/notes.js', notesRouter);
+app.use('/api/notes', notesData);
 
 module.exports = index;
