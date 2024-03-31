@@ -2,6 +2,7 @@ const app = require('express').Router();
 const { v4: uuidv4 } = require('uuidv4');
 const noteData = require('../../db/notes.json');
 const fs = require('fs');
+const notes = require('./notes');
 // GET route to return all saved notes
 app.get('/api/notes', (req, res) => {
   res.json(noteData);

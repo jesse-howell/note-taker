@@ -3,4 +3,4 @@ const notesData = require('./notes');
 
 app.use('/api/notes', notesData);
 
-module.exports = index;
+module.exports = app;
