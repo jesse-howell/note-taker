@@ -19,8 +19,6 @@ app.get('/notes', (req, res) =>
   res.sendFile(path.join(__dirname, '/views/notes.html'))
 );
 
-// DELETE route to delete a note by id
-
 app.listen(PORT, () =>
   console.log(`Express server listening at http://localhost:${PORT}`)
 );
